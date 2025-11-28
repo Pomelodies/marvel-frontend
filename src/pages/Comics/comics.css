@@ -1,0 +1,4 @@
+.container .fiche-comics > img {
+  object-position: top;
+  height: 300px;
+}
