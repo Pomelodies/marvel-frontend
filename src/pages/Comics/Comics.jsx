@@ -3,14 +3,20 @@ import { useState, useEffect } from "react";
 import getImg from "../../utils/getImg";
 import "./comics.css";
 
-const Comics = () => {
+const Comics = ({ searchComics }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      let comicsSearch = "";
+      if (searchComics) {
+        comicsSearch += "?title=" + searchComics;
+      }
       try {
-        const response = await axios.get("http://localhost:3000/comics");
+        const response = await axios.get(
+          `http://localhost:3000/comics${comicsSearch}`
+        );
         console.log(response.data);
         setData(response.data);
         setIsLoading(false);
@@ -19,7 +25,7 @@ const Comics = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [searchComics]);
 
   return isLoading ? (
     <p>Data is loading, please wait...</p>

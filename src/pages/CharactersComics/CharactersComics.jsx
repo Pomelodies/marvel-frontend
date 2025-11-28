@@ -26,7 +26,7 @@ const CharactersComics = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [characterId]);
 
   return isLoading ? (
     <p>Data is loading, please wait...</p>
