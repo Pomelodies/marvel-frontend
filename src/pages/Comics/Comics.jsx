@@ -2,15 +2,32 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import getImg from "../../utils/getImg";
 import "./comics.css";
+import PaginationComics from "../../components/PaginationComics/PaginationComics";
+import ScrollUpButton from "../../components/ScrollUp/ScrollUp";
 
 const Comics = ({ searchComics }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [skipComics, setSkipComics] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       let comicsSearch = "";
-      if (searchComics) {
+      let actualSkip = "";
+      if (skipComics) {
+        console.log(skipComics);
+        actualSkip = "?skip=" + skipComics;
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/comics${actualSkip}`
+          );
+          console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else if (searchComics) {
         comicsSearch += "?title=" + searchComics;
       }
       try {
@@ -25,12 +42,16 @@ const Comics = ({ searchComics }) => {
       }
     };
     fetchData();
-  }, [searchComics]);
+  }, [searchComics, skipComics]);
 
   return isLoading ? (
     <p>Data is loading, please wait...</p>
   ) : (
     <main>
+      <PaginationComics
+        setSkipComics={setSkipComics}
+        totalElement={data.count}
+      />
       <div className="container">
         {data.results.map((comics) => {
           return (
@@ -42,6 +63,7 @@ const Comics = ({ searchComics }) => {
           );
         })}
       </div>
+      <ScrollUpButton />
     </main>
   );
 };

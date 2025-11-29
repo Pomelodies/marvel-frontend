@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 // import des composants
 import Characters from "./pages/Characters/Characters";
@@ -12,6 +13,7 @@ import CharactersComics from "./pages/CharactersComics/CharactersComics";
 function App() {
   const [searchCharacter, setSearchCharacter] = useState("");
   const [searchComics, setSearchComics] = useState("");
+  const [userFavorites, setUserFavorites] = useState([]);
 
   return (
     <Router>
@@ -28,6 +30,8 @@ function App() {
             <Characters
               searchCharacter={searchCharacter}
               setSearch={setSearchCharacter}
+              userFavorites={userFavorites}
+              setUserFavorites={setUserFavorites}
             />
           }
         />
@@ -35,7 +39,10 @@ function App() {
           path="/comics"
           element={<Comics searchComics={searchComics} />}
         />
-        <Route path="/favoris" element={<Favoris />} />
+        <Route
+          path="/favoris"
+          element={<Favoris userFavorites={userFavorites} />}
+        />
         <Route path="/comics/:characterId" element={<CharactersComics />} />
       </Routes>
     </Router>

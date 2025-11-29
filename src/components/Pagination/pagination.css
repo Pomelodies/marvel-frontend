@@ -1,0 +1,9 @@
+.pageNumber {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pageNumber > button {
+  background-color: orange;
+}

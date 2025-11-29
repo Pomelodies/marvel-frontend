@@ -17,7 +17,7 @@ const ScrollUpButton = () => {
   }, []);
 
   return (
-    <div className={showGoTop ? "" : "scrollUpStyle"} onClick={handleScrollUp}>
+    <div className={showGoTop ? "scrollUpStyle" : ""} onClick={handleScrollUp}>
       <button>
         <span>Retournez vers le haut</span>
       </button>

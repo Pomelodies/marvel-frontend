@@ -1,21 +1,22 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import getImg from "../../utils/getImg";
 import "./characters.css";
 import Pagination from "../../components/Pagination/Pagination";
 import ScrollUpButton from "../../components/ScrollUp/ScrollUp";
 
-const Characters = ({ searchCharacter }) => {
+const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentSkip, setCurrentSkip] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-      //pour la barre de recherche
       let characterName = "";
       let trueSkip = "";
+
       if (searchCharacter) {
         console.log(searchCharacter);
         characterName += "?name=" + searchCharacter;
@@ -45,7 +46,7 @@ const Characters = ({ searchCharacter }) => {
       } else {
         try {
           const response = await axios.get(`http://localhost:3000/characters`);
-          console.log(response.data);
+          // console.log(response.data);
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
@@ -81,6 +82,24 @@ const Characters = ({ searchCharacter }) => {
                 <h2>{character.name}</h2>
                 {character.description ? <p>{character.description}</p> : ""}
               </Link>
+              <div>
+                <button
+                  onClick={() => {
+                    //copie du tableau
+                    const newTab = [...userFavorites];
+                    // modification du tableau
+                    newTab.push(character._id);
+                    //mise à jour du state
+                    setUserFavorites(newTab);
+                    // console.log(newTab);
+                    Cookies.set("userFavoriteCookies", userFavorites, {
+                      expires: 20,
+                    });
+                  }}
+                >
+                  Ajouter aux favoris
+                </button>
+              </div>
             </article>
           );
         })}

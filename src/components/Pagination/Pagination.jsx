@@ -1,27 +1,14 @@
+import "./pagination.css";
+
 const Pagination = ({ setCurrentSkip, totalElement, limit }) => {
   let pages = [];
   for (let i = 1; i <= Math.ceil(totalElement / limit); i++) {
     pages.push(i);
   }
-  //   //   console.log(pages); [
-  //     1,
-  //     2,
-  //     3,
-  //     4,
-  //     5,
-  //     6,
-  //     7,
-  //     8,
-  //     9,
-  //     10,
-  //     11,
-  //     12,
-  //     13,
-  //     14,
-  //     15
-  // ]
+  //   console.log(pages); tableau de 1 à 15
+
   return (
-    <div>
+    <div className="pageNumber">
       {pages.map((page, index) => {
         return (
           <button
