@@ -41,7 +41,12 @@ function App() {
         />
         <Route
           path="/favoris"
-          element={<Favoris userFavorites={userFavorites} />}
+          element={
+            <Favoris
+              userFavorites={userFavorites}
+              setUserFavorites={setUserFavorites}
+            />
+          }
         />
         <Route path="/comics/:characterId" element={<CharactersComics />} />
       </Routes>

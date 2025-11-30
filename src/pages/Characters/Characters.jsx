@@ -88,16 +88,30 @@ const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
                     //copie du tableau
                     const newTab = [...userFavorites];
                     // modification du tableau
-                    newTab.push(character._id);
+                    newTab.push(character.name);
                     //mise à jour du state
                     setUserFavorites(newTab);
                     // console.log(newTab);
+                    // mis à jour du cookie
                     Cookies.set("userFavoriteCookies", userFavorites, {
                       expires: 20,
                     });
                   }}
                 >
                   Ajouter aux favoris
+                </button>
+                <button
+                  onClick={() => {
+                    const newTable = [...userFavorites];
+                    const indexElem = newTable.indexOf(character.name);
+                    newTable.slice(indexElem, indexElem + 1);
+                    setUserFavorites(newTable);
+                    Cookies.set("userFavoriteCookies", userFavorites, {
+                      expires: 20,
+                    });
+                  }}
+                >
+                  Retirer des favoris
                 </button>
               </div>
             </article>
