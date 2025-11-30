@@ -2,26 +2,26 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import getImg from "../../utils/getImg";
 import "./comics.css";
-import PaginationComics from "../../components/PaginationComics/PaginationComics";
+import Pagination from "../../components/Pagination/Pagination";
 import ScrollUpButton from "../../components/ScrollUp/ScrollUp";
 
-const Comics = ({ searchComics }) => {
+const Comics = ({ searchComics, setCurrentSkip, currentSkip }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [skipComics, setSkipComics] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       let comicsSearch = "";
       let actualSkip = "";
-      if (skipComics) {
-        console.log(skipComics);
-        actualSkip = "?skip=" + skipComics;
+      if (currentSkip) {
+        console.log(currentSkip);
+        actualSkip += "?skip=" + currentSkip;
+        console.log(actualSkip);
         try {
           const response = await axios.get(
             `http://localhost:3000/comics${actualSkip}`
           );
-          console.log(response.data);
+          // console.log(response.data);
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
@@ -29,30 +29,39 @@ const Comics = ({ searchComics }) => {
         }
       } else if (searchComics) {
         comicsSearch += "?title=" + searchComics;
-      }
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/comics${comicsSearch}`
-        );
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/comics${comicsSearch}`
+          );
+          // console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        try {
+          const response = await axios.get(`http://localhost:3000/comics`);
+          // console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.message);
+        }
       }
     };
     fetchData();
-  }, [searchComics, skipComics]);
+  }, [searchComics, currentSkip]);
 
   return isLoading ? (
-    <p>Data is loading, please wait...</p>
+    <>
+      <p>Data is loading, please wait...</p>
+    </>
   ) : (
     <main>
-      <PaginationComics
-        setSkipComics={setSkipComics}
-        totalElement={data.count}
-      />
+      <h1>LES COMICS</h1>
       <div className="container">
+        {" "}
         {data.results.map((comics) => {
           return (
             <article className="fiche-comics" key={comics._id}>
@@ -63,6 +72,11 @@ const Comics = ({ searchComics }) => {
           );
         })}
       </div>
+      <Pagination
+        setCurrentSkip={setCurrentSkip}
+        totalElement={data.count}
+        limit={data.limit}
+      />
       <ScrollUpButton />
     </main>
   );

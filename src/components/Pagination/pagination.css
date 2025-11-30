@@ -2,8 +2,11 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
 }
 
 .pageNumber > button {
   background-color: orange;
+  cursor: pointer;
 }

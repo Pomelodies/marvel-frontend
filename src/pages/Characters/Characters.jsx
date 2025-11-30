@@ -7,10 +7,15 @@ import "./characters.css";
 import Pagination from "../../components/Pagination/Pagination";
 import ScrollUpButton from "../../components/ScrollUp/ScrollUp";
 
-const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
+const Characters = ({
+  searchCharacter,
+  userFavorites,
+  setUserFavorites,
+  setCurrentSkip,
+  currentSkip,
+}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentSkip, setCurrentSkip] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,14 +29,14 @@ const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
           const response = await axios.get(
             `http://localhost:3000/characters${characterName}`
           );
-          console.log(response.data);
+          // console.log(response.data);
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
           console.log(error.message);
         }
       } else if (currentSkip) {
-        console.log(currentSkip);
+        // console.log(currentSkip);
         trueSkip += "?skip=" + currentSkip;
         try {
           const response = await axios.get(
@@ -61,11 +66,7 @@ const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
     <p>Data is loading, please wait...</p>
   ) : (
     <main>
-      <Pagination
-        setCurrentSkip={setCurrentSkip}
-        totalElement={data.count}
-        limit={data.limit}
-      />
+      <h1>LES PERSONNAGES</h1>
       <div className="container">
         {data.results.map((character) => {
           return (
@@ -88,36 +89,33 @@ const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
                     //copie du tableau
                     const newTab = [...userFavorites];
                     // modification du tableau
-                    newTab.push(character.name);
+                    newTab.push(character);
                     //mise à jour du state
                     setUserFavorites(newTab);
                     // console.log(newTab);
                     // mis à jour du cookie
-                    Cookies.set("userFavoriteCookies", userFavorites, {
-                      expires: 20,
-                    });
+                    // console.log(userFavorites);
+                    Cookies.set(
+                      "userFavoriteCharacters",
+                      JSON.stringify(newTab),
+                      {
+                        expires: 20,
+                      }
+                    );
                   }}
                 >
                   Ajouter aux favoris
-                </button>
-                <button
-                // onClick={() => {
-                //   const newTable = [...userFavorites];
-                //   const indexElem = newTable.indexOf(character.name);
-                //   newTable.slice(indexElem, indexElem + 1);
-                //   setUserFavorites(newTable);
-                //   Cookies.set("userFavoriteCookies", userFavorites, {
-                //     expires: 20,
-                //   });
-                // }}
-                >
-                  Retirer des favoris
                 </button>
               </div>
             </article>
           );
         })}
       </div>
+      <Pagination
+        setCurrentSkip={setCurrentSkip}
+        totalElement={data.count}
+        limit={data.limit}
+      />
       <ScrollUpButton />
     </main>
   );

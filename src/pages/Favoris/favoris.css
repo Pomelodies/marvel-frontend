@@ -1,0 +1,22 @@
+article > img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  object-position: left;
+}
+
+.fav-articles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 30px;
+  font-family: "Bangers", system-ui;
+}
+
+.fav-articles p {
+  font-family: "Bangers", system-ui;
+}

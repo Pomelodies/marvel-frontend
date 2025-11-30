@@ -14,37 +14,7 @@ const Pagination = ({ setCurrentSkip, totalElement, limit }) => {
           <button
             key={index}
             onClick={() => {
-              if (index === 0) {
-                setCurrentSkip(0);
-              } else if (index === 1) {
-                setCurrentSkip(100);
-              } else if (index === 2) {
-                setCurrentSkip(200);
-              } else if (index === 3) {
-                setCurrentSkip(300);
-              } else if (index === 4) {
-                setCurrentSkip(400);
-              } else if (index === 5) {
-                setCurrentSkip(500);
-              } else if (index === 6) {
-                setCurrentSkip(600);
-              } else if (index === 7) {
-                setCurrentSkip(700);
-              } else if (index === 8) {
-                setCurrentSkip(800);
-              } else if (index === 9) {
-                setCurrentSkip(900);
-              } else if (index === 10) {
-                setCurrentSkip(1000);
-              } else if (index === 11) {
-                setCurrentSkip(1100);
-              } else if (index === 12) {
-                setCurrentSkip(1200);
-              } else if (index === 13) {
-                setCurrentSkip(1300);
-              } else if (index === 14) {
-                setCurrentSkip(1400);
-              }
+              setCurrentSkip(page * 100 - 100);
             }}
           >
             {page}

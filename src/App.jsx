@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 // import des composants
 import Characters from "./pages/Characters/Characters";
 import Comics from "./pages/Comics/Comics";
-import Favoris from "./pages/Favoris";
+import Favoris from "./pages/Favoris/Favoris";
 import Header from "./components/Header/Header";
 import CharactersComics from "./pages/CharactersComics/CharactersComics";
 import SignUp from "./pages/SignUp/SignUp";
@@ -16,6 +16,7 @@ function App() {
   const [searchCharacter, setSearchCharacter] = useState("");
   const [searchComics, setSearchComics] = useState("");
   const [userFavorites, setUserFavorites] = useState([]);
+  const [currentSkip, setCurrentSkip] = useState(0);
 
   const setUser = (token) => {
     if (token) {
@@ -44,12 +45,21 @@ function App() {
               setSearch={setSearchCharacter}
               userFavorites={userFavorites}
               setUserFavorites={setUserFavorites}
+              setCurrentSkip={setCurrentSkip}
+              currentSkip={currentSkip}
             />
           }
         />
         <Route
           path="/comics"
-          element={<Comics searchComics={searchComics} />}
+          element={
+            <Comics
+              searchComics={searchComics}
+              setSearchComics={setSearchComics}
+              setCurrentSkip={setCurrentSkip}
+              currentSkip={currentSkip}
+            />
+          }
         />
         <Route
           path="/favoris"
