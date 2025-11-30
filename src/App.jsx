@@ -9,11 +9,23 @@ import Comics from "./pages/Comics/Comics";
 import Favoris from "./pages/Favoris";
 import Header from "./components/Header/Header";
 import CharactersComics from "./pages/CharactersComics/CharactersComics";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
+  const [token, setToken] = useState(Cookies.get("userToken") || null);
   const [searchCharacter, setSearchCharacter] = useState("");
   const [searchComics, setSearchComics] = useState("");
   const [userFavorites, setUserFavorites] = useState([]);
+
+  const setUser = (token) => {
+    if (token) {
+      Cookies.set("userToken", token, { expires: 1 });
+      setToken(token);
+    } else {
+      Cookies.remove("userToken");
+      setToken(null);
+    }
+  };
 
   return (
     <Router>
@@ -49,6 +61,7 @@ function App() {
           }
         />
         <Route path="/comics/:characterId" element={<CharactersComics />} />
+        <Route path="/user/signup" element={<SignUp setUser={setUser} />} />
       </Routes>
     </Router>
   );
