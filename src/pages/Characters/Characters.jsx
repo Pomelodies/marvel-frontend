@@ -101,15 +101,15 @@ const Characters = ({ searchCharacter, userFavorites, setUserFavorites }) => {
                   Ajouter aux favoris
                 </button>
                 <button
-                  onClick={() => {
-                    const newTable = [...userFavorites];
-                    const indexElem = newTable.indexOf(character.name);
-                    newTable.slice(indexElem, indexElem + 1);
-                    setUserFavorites(newTable);
-                    Cookies.set("userFavoriteCookies", userFavorites, {
-                      expires: 20,
-                    });
-                  }}
+                // onClick={() => {
+                //   const newTable = [...userFavorites];
+                //   const indexElem = newTable.indexOf(character.name);
+                //   newTable.slice(indexElem, indexElem + 1);
+                //   setUserFavorites(newTable);
+                //   Cookies.set("userFavoriteCookies", userFavorites, {
+                //     expires: 20,
+                //   });
+                // }}
                 >
                   Retirer des favoris
                 </button>
