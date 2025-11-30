@@ -27,7 +27,7 @@ const Characters = ({
         characterName += "?name=" + searchCharacter;
         try {
           const response = await axios.get(
-            `http://localhost:3000/characters${characterName}`
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/characters${characterName}`
           );
           // console.log(response.data);
           setData(response.data);
@@ -40,7 +40,7 @@ const Characters = ({
         trueSkip += "?skip=" + currentSkip;
         try {
           const response = await axios.get(
-            `http://localhost:3000/characters${trueSkip}`
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/characters${trueSkip}`
           );
           console.log(response.data);
           setData(response.data);
@@ -50,7 +50,9 @@ const Characters = ({
         }
       } else {
         try {
-          const response = await axios.get(`http://localhost:3000/characters`);
+          const response = await axios.get(
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/characters`
+          );
           // console.log(response.data);
           setData(response.data);
           setIsLoading(false);

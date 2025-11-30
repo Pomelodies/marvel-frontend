@@ -19,7 +19,7 @@ const Comics = ({ searchComics, setCurrentSkip, currentSkip }) => {
         console.log(actualSkip);
         try {
           const response = await axios.get(
-            `http://localhost:3000/comics${actualSkip}`
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/comics${actualSkip}`
           );
           // console.log(response.data);
           setData(response.data);
@@ -31,7 +31,7 @@ const Comics = ({ searchComics, setCurrentSkip, currentSkip }) => {
         comicsSearch += "?title=" + searchComics;
         try {
           const response = await axios.get(
-            `http://localhost:3000/comics${comicsSearch}`
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/comics${comicsSearch}`
           );
           // console.log(response.data);
           setData(response.data);
@@ -41,7 +41,9 @@ const Comics = ({ searchComics, setCurrentSkip, currentSkip }) => {
         }
       } else {
         try {
-          const response = await axios.get(`http://localhost:3000/comics`);
+          const response = await axios.get(
+            `https://site--marvel-backend--tygmhpsjkjgv.code.run/comics`
+          );
           // console.log(response.data);
           setData(response.data);
           setIsLoading(false);
